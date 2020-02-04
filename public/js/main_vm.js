@@ -13,6 +13,11 @@ function userDC(packet) {
     debugger;
     console.log(packet);
 }
+
+function appendNewMessage(msg) {
+    // push incoming message into the vue instance -- messages array
+    vm.messages.push(msg);
+}
 //main vue instance
 const vm = new Vue({
     data: {
@@ -30,6 +35,7 @@ const vm = new Vue({
                 content: this.message,
                 name: this.nickName || 'anonymous'
             })
+            this.message = "";
         }
     },
     components: {
@@ -44,3 +50,4 @@ const vm = new Vue({
 //some event handling -> these events are coming from the server
 socket.addEventListener('connected', setUserId);
 socket.addEventListener('user_disconnect', userDC);
+socket.addEventListener('new_message', appendNewMessage);
